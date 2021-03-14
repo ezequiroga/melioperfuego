@@ -3,10 +3,10 @@ package com.ml.operfuego.controllers;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.dtos.TopSecreteDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller encargado de recibir la informacion de los satelites y determinar
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @author ae_qu
  */
-@Controller
+@RestController
 @RequestMapping("/topsecrete")
 public class InteligenciaController {
     
-    @PostMapping
-    private ResponseEntity<TopSecreteDto> topSecrete(@RequestBody SatellitesDto satellitesDto){
+    @PostMapping(value = "/")
+    public ResponseEntity<TopSecreteDto> topSecrete(@RequestBody SatellitesDto satellitesDto){
         
         
         
