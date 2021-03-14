@@ -3,7 +3,6 @@ package com.ml.operfuego.services;
 import com.ml.operfuego.dtos.CoordenadaDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.utils.CoordenadasUtil;
-import java.awt.Point;
 import org.springframework.stereotype.Service;
 
 /**
