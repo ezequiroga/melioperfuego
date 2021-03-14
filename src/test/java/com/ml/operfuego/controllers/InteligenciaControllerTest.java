@@ -53,13 +53,13 @@ public class InteligenciaControllerTest {
         String service = baseApiUri.concat("/topsecrete/");
         
         String[] m1 = new String[]{"este","","","mensaje",""};
-        SateliteDto s1 = new SateliteDto("kenobi", Double.parseDouble("100.0"),m1);
+        SateliteDto s1 = new SateliteDto("kenobi", Double.parseDouble("100.0"),m1,null);
         
         String[] m2 = new String[]{"","es","","","secreto"};
-        SateliteDto s2 = new SateliteDto("skywalker", Double.parseDouble("115.5"),m2);
+        SateliteDto s2 = new SateliteDto("skywalker", Double.parseDouble("115.5"),m2,null);
         
         String[] m3 = new String[]{"este","","un","",""};
-        SateliteDto s3 = new SateliteDto("sato", Double.parseDouble("142.7"),m3);
+        SateliteDto s3 = new SateliteDto("sato", Double.parseDouble("142.7"),m3,null);
         
         List<SateliteDto> lSatelites = new LinkedList<>();
         lSatelites.add(s1);

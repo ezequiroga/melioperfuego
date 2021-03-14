@@ -1,5 +1,6 @@
 package com.ml.operfuego.dtos;
 
+import java.awt.Point;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,5 @@ public class SateliteDto {
     private String name;
     private double  distance;
     private String[] message;
+    private CoordenadaDto position;
 }

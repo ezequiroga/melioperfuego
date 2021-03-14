@@ -23,7 +23,6 @@ public class InteligenciaController {
         
         
         
-        
         return null;
     }
     
