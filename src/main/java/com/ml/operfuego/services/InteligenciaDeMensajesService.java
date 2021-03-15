@@ -38,7 +38,7 @@ public class InteligenciaDeMensajesService {
             }
         });
         
-        //Comparador por posision en los respectivos mensajes
+        //Comparador por posision (valor del map) en los respectivos mensajes
         Comparator<Map.Entry<String,Integer>> comparator = (Map.Entry<String,Integer> first, Map.Entry<String,Integer> second) -> first.getValue().compareTo(second.getValue());        
         
         //Se ordena la lista y se retorna el mensaje

@@ -1,7 +1,9 @@
 package com.ml.operfuego.dtos;
 
 import java.awt.Point;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO que modela la respuesta ultra secreta con la posicion y el mensaje
@@ -10,7 +12,9 @@ import lombok.Data;
  * @author ae_qu
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TopSecreteDto {
-    private Point position;
+    private CoordenadaDto position;
     private String message;
 }

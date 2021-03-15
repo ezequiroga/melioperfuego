@@ -1,5 +1,6 @@
 package com.ml.operfuego.controllers;
 
+import com.ml.operfuego.dtos.CoordenadaDto;
 import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.dtos.TopSecreteDto;
@@ -51,23 +52,21 @@ public class InteligenciaControllerTest {
     public void testTopSecrete() {
         System.out.println("topSecrete");
         String service = baseApiUri.concat("/topsecrete/");
+        String mensajeEnviado = "este es un mensaje secreto";
+        CoordenadaDto naveEnemiga = new CoordenadaDto(1.0, 1.0);
         
-        String[] m1 = new String[]{"este","","","mensaje",""};
-        SateliteDto s1 = new SateliteDto("kenobi", Double.parseDouble("100.0"),m1,null);
         
-        String[] m2 = new String[]{"","es","","","secreto"};
-        SateliteDto s2 = new SateliteDto("skywalker", Double.parseDouble("115.5"),m2,null);
+        SateliteDto sX = new SateliteDto("kenobi", Math.sqrt(26), new String[]{"este", "", "", "mensaje", ""}, new CoordenadaDto(2, 6));
+        SateliteDto sY = new SateliteDto("skywalker", Math.sqrt(25), new String[]{"", "es", "", "", "secreto"}, new CoordenadaDto(5, 4));
+        SateliteDto sZ = new SateliteDto("sato", Math.sqrt(40), new String[]{"este", "", "un", "", ""}, new CoordenadaDto(7, 3));
         
-        String[] m3 = new String[]{"este","","un","",""};
-        SateliteDto s3 = new SateliteDto("sato", Double.parseDouble("142.7"),m3,null);
-        
-        List<SateliteDto> lSatelites = new LinkedList<>();
-        lSatelites.add(s1);
-        lSatelites.add(s2);
-        lSatelites.add(s3);        
+        List<SateliteDto> satelites = new LinkedList<>();
+        satelites.add(sX);
+        satelites.add(sY);
+        satelites.add(sZ);
         
         SatellitesDto satellitesDto = new SatellitesDto();
-        satellitesDto.setSatellites(lSatelites);
+        satellitesDto.setSatellites(satelites);
         
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Content-Type", "application/json");
@@ -77,6 +76,9 @@ public class InteligenciaControllerTest {
         
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
+        assertEquals(naveEnemiga.x, Math.ceil(responseEntity.getBody().getPosition().x));
+        assertEquals(naveEnemiga.y, Math.ceil(responseEntity.getBody().getPosition().y));
+        assertEquals(mensajeEnviado, responseEntity.getBody().getMessage());
 
     }
     
