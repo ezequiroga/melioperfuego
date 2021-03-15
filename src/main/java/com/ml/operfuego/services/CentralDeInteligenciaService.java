@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,18 +43,21 @@ public class CentralDeInteligenciaService {
         }
     }
 
-    public TopSecreteDto informacionUltraSecreta(SatellitesDto satellitesDto) {
-        CoordenadaDto coordenadas = inteligenciaDePosicionesService.posisionNaveEnemiga(satellitesDto);
+    public Optional<TopSecreteDto> informacionUltraSecreta(SatellitesDto satellitesDto) {
+        Optional<CoordenadaDto> coordenadas = inteligenciaDePosicionesService.posisionNaveEnemiga(satellitesDto);
+        if (coordenadas.isEmpty()) {
+            return Optional.empty();
+        }
         String mensaje = inteligenciaDeMensajeService.reconstruirMensaje(satellitesDto);
-        return new TopSecreteDto(coordenadas, mensaje);
+        return Optional.of(new TopSecreteDto(coordenadas.get(), mensaje));
     }
 
-    public TopSecreteDto informacionUltraSecreta() {
+    public Optional<TopSecreteDto> informacionUltraSecreta() {
         SatellitesDto satellitesDto = new SatellitesDto();
         List<SateliteDto> satelitesList = new LinkedList<>();
-        for (Map.Entry<String, SateliteDto> entry : satelites.entrySet()) {
+        satelites.entrySet().forEach(entry -> {
             satelitesList.add(entry.getValue());
-        }
+        });
         satellitesDto.setSatellites(satelitesList);
         return informacionUltraSecreta(satellitesDto);
     }

@@ -4,6 +4,7 @@ import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.dtos.TopSecreteDto;
 import com.ml.operfuego.services.CentralDeInteligenciaService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,10 @@ public class InteligenciaCommandController {
     @PostMapping(value = "/topsecrete/")
     public ResponseEntity topSecrete(@RequestBody SatellitesDto satellitesDto) {
         
-        TopSecreteDto tsDto = centralDeInteligenciaService.informacionUltraSecreta(satellitesDto);
+        Optional<TopSecreteDto> tsDto = centralDeInteligenciaService.informacionUltraSecreta(satellitesDto);
+        if(tsDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(tsDto, HttpStatus.OK);
     }

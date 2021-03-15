@@ -2,6 +2,7 @@ package com.ml.operfuego.utils;
 
 import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
+import java.util.Optional;
 
 /**
  * Utiliza para calcular las coordenas de la nave enemiga, a partir de las
@@ -14,9 +15,10 @@ public class CoordenadasUtil {
      * Calcula la coordenada Y de la nave enemiga a partir de la posicion de los
      * tres satelites.
      * 
+     * @param satellitesDto
      * @return la coordenada Y de la posicion de la nave enemiga
      */
-    public static double calcularCoordenadaY(SatellitesDto satellitesDto){
+    public static Optional<Double> calcularCoordenadaY(SatellitesDto satellitesDto){
         SateliteDto sX = satellitesDto.getSatellites().get(0);
         SateliteDto sY = satellitesDto.getSatellites().get(1);
         SateliteDto sZ = satellitesDto.getSatellites().get(2);
@@ -40,19 +42,30 @@ public class CoordenadasUtil {
                 );
         double G = sY.getPosition().y - sX.getPosition().y;
         
+        if (D == 0){//Hace cero el denominador de las diviciones
+            return Optional.empty();
+        }
+        
+        if ((4*A*G)/D == C){//Hace cero el denominador de la divicion
+            return Optional.empty();
+        }
+        
         double coordX = (-(F/D) - B) / ((4*A*G)/D - C);
         
-        return coordX;
+        return Optional.of(coordX);
     }
     
     /**
      * Calcula la coordena X de la nave enemiga a partir de la coordena Y.
      * 
+     * @param satellitesDto
      * @param coordY calculada previamente.
      * 
      * @return la coordenada X de la posicion de la nave enemiga.
      */
-    public static double calcularCoordenadaX(SatellitesDto satellitesDto, double coordY){
+    public static Optional<Double> calcularCoordenadaX(SatellitesDto satellitesDto, Optional<Double> coordY){
+        if(coordY.isEmpty()) return Optional.empty();
+        
         SateliteDto sX = satellitesDto.getSatellites().get(0);
         SateliteDto sY = satellitesDto.getSatellites().get(1);
         SateliteDto sZ = satellitesDto.getSatellites().get(2);
@@ -65,7 +78,11 @@ public class CoordenadasUtil {
                 + cuadrado(sY.getDistance());
         double C = (-2)*(sY.getPosition().x - sX.getPosition().x);
         
-        return (2*coordY*A + B) / C;
+        if (C == 0){//Hace cero el denominador de la divicion
+            return Optional.empty();
+        }
+        
+        return Optional.of((2*coordY.get()*A + B) / C);
     }
     
     private static double cuadrado(int number){
