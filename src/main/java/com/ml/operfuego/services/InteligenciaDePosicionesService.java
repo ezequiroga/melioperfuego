@@ -3,6 +3,7 @@ package com.ml.operfuego.services;
 import com.ml.operfuego.dtos.CoordenadaDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.utils.CoordenadasUtil;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,11 +13,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class InteligenciaDePosicionesService {
-    public CoordenadaDto posisionNaveEnemiga(SatellitesDto satellitesDto){
+    public Optional<CoordenadaDto> posisionNaveEnemiga(SatellitesDto satellitesDto){
         
-        double coordY = CoordenadasUtil.calcularCoordenadaY(satellitesDto);
-        double coordX = CoordenadasUtil.calcularCoordenadaX(satellitesDto, coordY);
+        Optional<Double> coordY = CoordenadasUtil.calcularCoordenadaY(satellitesDto);
+        Optional<Double> coordX = CoordenadasUtil.calcularCoordenadaX(satellitesDto, coordY);
         
-        return new CoordenadaDto(coordX, coordY);
+        if(coordX.isEmpty() || coordY.isEmpty()){
+            return Optional.empty();
+        }
+        
+        return Optional.of(new CoordenadaDto(coordX.get(), coordY.get()));
     }
 }

@@ -3,9 +3,9 @@ package com.ml.operfuego.utils;
 import com.ml.operfuego.dtos.CoordenadaDto;
 import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
-import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,8 +35,8 @@ public class CoordenadasUtilTest {
         satellitesDto.setSatellites(satelites);
         
         double expResult = 1.0;
-        double result = CoordenadasUtil.calcularCoordenadaY(satellitesDto);
-        assertEquals(expResult, Math.ceil(result));
+        Optional<Double> result = CoordenadasUtil.calcularCoordenadaY(satellitesDto);
+        assertEquals(expResult, Math.ceil(result.get()));
     }
 
     @Test
@@ -54,10 +54,10 @@ public class CoordenadasUtilTest {
         
         SatellitesDto satellitesDto = new SatellitesDto();
         satellitesDto.setSatellites(satelites);
-        double coordY = 1.0;
+        Optional<Double> coordY = Optional.of(1.0);
         double expResult = 1.0;
-        double result = CoordenadasUtil.calcularCoordenadaX(satellitesDto, coordY);
-        assertEquals(expResult, Math.ceil(result));
+        Optional<Double> result = CoordenadasUtil.calcularCoordenadaX(satellitesDto, coordY);
+        assertEquals(expResult, Math.ceil(result.get()));
     }
     
 }

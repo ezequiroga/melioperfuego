@@ -5,6 +5,7 @@ import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,8 +37,8 @@ public class InteligenciaDePosicionesServiceTest {
         InteligenciaDePosicionesService instance = new InteligenciaDePosicionesService();
         
         CoordenadaDto expResult = new CoordenadaDto(1.0, 1.0);
-        CoordenadaDto resultAux = instance.posisionNaveEnemiga(satellitesDto);
-        CoordenadaDto result = new CoordenadaDto(Math.ceil(resultAux.x), Math.ceil(resultAux.y));
+        Optional<CoordenadaDto> resultAux = instance.posisionNaveEnemiga(satellitesDto);
+        CoordenadaDto result = new CoordenadaDto(Math.ceil(resultAux.get().x), Math.ceil(resultAux.get().y));
         
         assertEquals(expResult, result);
     }
