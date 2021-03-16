@@ -7,7 +7,7 @@ La solucion cuenta con dos servicios conectados:
 - **centralinteligencia**: servicio core (puerto 9090) expuesto (solucion Docker) para recibir peticiones.
 - **satelites**: servicio (puerto 9191) utlizado para gestionar la informacion de los satelites.
 
-El archivo *application.properties* del **centralinteligencia** contiene la url del servicio de satelites. Ese valor se espera por parametro. El default es `http://localhost:9191`
+El archivo *application.properties* del **centralinteligencia** contiene la url del servicio de satelites. Ese valor se espera por parametro. El default es `http://localhost:9191/api/satelites`
 
 ## Documentacion de la API
 

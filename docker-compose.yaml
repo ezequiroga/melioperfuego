@@ -4,6 +4,7 @@ services:
   centralinteligencia:
     image: centralinteligencia:v1.0.0
     container_name: centralinteligencia
+    env_file: centralinteligencia/enrironment.env
     build:
         context: ./centralinteligencia
         dockerfile: Dockerfile
@@ -17,6 +18,4 @@ services:
     build:
         context: ./satelites
         dockerfile: Dockerfile
-    ports:
-      - '9191:9191'
     restart: always
