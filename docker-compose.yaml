@@ -10,3 +10,13 @@ services:
     ports:
       - '9090:9090'
     restart: always
+    
+  satelites:
+    image: satelites:v1.0.0
+    container_name: satelites
+    build:
+        context: ./satelites
+        dockerfile: Dockerfile
+    ports:
+      - '9191:9191'
+    restart: always
