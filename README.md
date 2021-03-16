@@ -41,3 +41,4 @@ Estando en la raiz del proyecto:
 ## TODO para version productiva
 - Seguridad en la API mediante JWT
 - Manejo de excepciones en todas las comunicaciones entre los servicios.
+- Completar los test para todas las comunicaciones

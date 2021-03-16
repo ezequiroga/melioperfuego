@@ -4,15 +4,21 @@ import com.ml.operfuego.dtos.CoordenadaDto;
 import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.dtos.TopSecreteDto;
+import com.ml.operfuego.services.CentralDeInteligenciaService;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
@@ -35,6 +41,9 @@ public class InteligenciaControllerTest {
     
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @MockBean
+    private CentralDeInteligenciaService centralDeInteligenciaService;
     
     private String baseApiUri;
     
@@ -71,6 +80,10 @@ public class InteligenciaControllerTest {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Content-Type", "application/json");
         HttpEntity entity = new HttpEntity(satellitesDto,headers);
+        
+        doNothing().when(centralDeInteligenciaService).registrarSatelite(any(SateliteDto.class));TopSecreteDto tsDto = new TopSecreteDto(new CoordenadaDto(1.0, 1.0), "este es un mensaje secreto");
+        Optional<TopSecreteDto> returnOpt = Optional.of(tsDto);
+        when(centralDeInteligenciaService.informacionUltraSecreta(any(SatellitesDto.class))).thenReturn(returnOpt);
         
         ResponseEntity<TopSecreteDto> responseEntity = restTemplate.postForEntity(service, entity, TopSecreteDto.class);
         

@@ -4,7 +4,7 @@ services:
   centralinteligencia:
     image: centralinteligencia:v1.0.0
     container_name: centralinteligencia
-    env_file: centralinteligencia/enrironment.env
+    env_file: centralinteligencia/environment.env
     build:
         context: ./centralinteligencia
         dockerfile: Dockerfile

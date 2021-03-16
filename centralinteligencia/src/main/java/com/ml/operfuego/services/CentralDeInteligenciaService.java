@@ -5,8 +5,6 @@ import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import com.ml.operfuego.dtos.TopSecreteDto;
 import com.ml.operfuego.exceptions.MSComunicationException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -41,7 +38,6 @@ public class CentralDeInteligenciaService {
     @Value("${ms.satelites}")
     private String msSatelite;
 
-//    HashMap<String, SateliteDto> satelites = new HashMap<>();
     public int getCantidadDeSatelites() {
         ResponseEntity<Integer> response = restTemplate.getForEntity(msSatelite.concat("/count"), Integer.class);
         return response.getBody();
