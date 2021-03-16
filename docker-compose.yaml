@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  centralinteligencia:
+    image: centralinteligencia:v1.0.0
+    container_name: centralinteligencia
+    build:
+        context: ./centralinteligencia
+        dockerfile: Dockerfile
+    ports:
+      - '9090:9090'
+    restart: always
