@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +25,9 @@ public class CentralDeInteligenciaService {
     private InteligenciaDePosicionesService inteligenciaDePosicionesService;
     @Autowired
     private InteligenciaDeMensajesService inteligenciaDeMensajeService;
+    
+    @Value("${ms.satelites}")
+    private String msSatelite;
 
     HashMap<String, SateliteDto> satelites = new HashMap<>();
 
