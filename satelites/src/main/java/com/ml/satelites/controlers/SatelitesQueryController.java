@@ -22,7 +22,7 @@ public class SatelitesQueryController {
     private SatelitesService satelitesService;
     
     @GetMapping(value = "/count")
-    public ResponseEntity cantSatelites(@PathVariable String satellite_name){
+    public ResponseEntity cantSatelites(){
         return new ResponseEntity(satelitesService.getCantidadDeSatelites(), HttpStatus.OK);
     }
     

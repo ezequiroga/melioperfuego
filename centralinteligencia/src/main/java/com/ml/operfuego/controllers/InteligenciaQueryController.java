@@ -1,8 +1,10 @@
 package com.ml.operfuego.controllers;
 
 import com.ml.operfuego.dtos.TopSecreteDto;
+import com.ml.operfuego.exceptions.MSComunicationException;
 import com.ml.operfuego.services.CentralDeInteligenciaService;
 import java.util.Optional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping()
+@Log4j2
 public class InteligenciaQueryController {
 
     @Autowired
@@ -35,12 +38,18 @@ public class InteligenciaQueryController {
      * mensaje de error.
      */
     @GetMapping(value = "/topsecret_split/{satellite_name}")
-    public ResponseEntity topSecreteSplitPost(@PathVariable String satellite_name) {
-        if (!centralDeInteligenciaService.sateliteRegistrado(satellite_name)) {
-            return new ResponseEntity("Satelite desconocido!", HttpStatus.NOT_FOUND);
+    public ResponseEntity topSecreteSplitPost(@PathVariable String satellite_name)  {
+        try {
+            if (!centralDeInteligenciaService.sateliteRegistrado(satellite_name)) {
+                return new ResponseEntity("Satelite desconocido!", HttpStatus.NOT_FOUND);
+            }
+        } catch (MSComunicationException ex){
+            log.error("Error en la comunicacion con el MS de Satelites");
+            return new ResponseEntity(HttpStatus.SERVICE_UNAVAILABLE);
         }
+        
         if (centralDeInteligenciaService.getCantidadDeSatelites() < 3) {
-            return new ResponseEntity("No hay suficiente informacion para retornar la ubicacion!", HttpStatus.NO_CONTENT);
+            return new ResponseEntity("No hay suficiente informacion para retornar la ubicacion!", HttpStatus.NOT_ACCEPTABLE);
         }
         
         Optional<TopSecreteDto> tsDto = centralDeInteligenciaService.informacionUltraSecreta();

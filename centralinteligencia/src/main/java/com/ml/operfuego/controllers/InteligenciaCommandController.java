@@ -40,10 +40,15 @@ public class InteligenciaCommandController {
      */
     @PostMapping(value = "/topsecrete/")
     public ResponseEntity topSecrete(@RequestBody SatellitesDto satellitesDto) {
+        if(satellitesDto.getSatellites().size() < 3){
+            return new ResponseEntity<>("No hay suficiente informacion para retornar la ubicacion!", HttpStatus.NOT_FOUND);
+        }
+        
+        satellitesDto.getSatellites().forEach(s -> centralDeInteligenciaService.registrarSatelite(s));
         
         Optional<TopSecreteDto> tsDto = centralDeInteligenciaService.informacionUltraSecreta(satellitesDto);
         if(tsDto.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No se pudo determinar la ubicacion de los satelites!", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(tsDto, HttpStatus.OK);

@@ -21,7 +21,7 @@ public class SatelitesCommandController {
     @Autowired
     private SatelitesService satelitesService;
     
-    @PostMapping(value = "/registrar")
+    @PostMapping(value = "/")
     private ResponseEntity retrieve(@RequestBody SateliteDto sateliteDto){
         satelitesService.registrarSatelite(sateliteDto);
         return new ResponseEntity(HttpStatus.CREATED);
