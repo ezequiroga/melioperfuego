@@ -1,12 +1,10 @@
 package com.ml.satelites.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ml.satelites.dtos.CoordenadaDto;
 import com.ml.satelites.dtos.SateliteDto;
 import com.ml.satelites.entities.SateliteEntity;
 import com.ml.satelites.repositories.SatelitesRepository;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -35,11 +33,15 @@ public class SatelitesService {
         }
         SateliteDto dto = new SateliteDto();
         dto.setName(entity.get().getName());
-        if(entity.get().getDistance() != null) dto.setDistance(entity.get().getDistance().doubleValue());
-        if (entity.get().getPositionX() != null && entity.get().getPositionY() != null){
+        if (entity.get().getDistance() != null) {
+            dto.setDistance(entity.get().getDistance().doubleValue());
+        }
+        if (entity.get().getPositionX() != null && entity.get().getPositionY() != null) {
             CoordenadaDto coordenada = new CoordenadaDto(entity.get().getPositionX().doubleValue(), entity.get().getPositionY().doubleValue());
             dto.setPosition(coordenada);
         }
+        //TODO
+        //Retornar String[]
         return Optional.of(dto);
     }
 
@@ -48,16 +50,27 @@ public class SatelitesService {
         SateliteEntity e;
         if (entity.isPresent()) {
             e = entity.get();
-            e.setPositionX(BigDecimal.valueOf(satelite.getPosition().x));
-            e.setPositionY(BigDecimal.valueOf(satelite.getPosition().y));
-            e.setDistance(BigDecimal.valueOf(satelite.getDistance()));
         } else {
             e = new SateliteEntity();
             e.setName(satelite.getName());
+        }
+        if(satelite.getMessage() != null){
+            boolean stringVacio = true;
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String s : satelite.getMessage()){
+                if(!stringVacio){
+                    stringBuilder.append("--");
+                }
+                stringBuilder.append(s);
+                stringVacio = false;
+            }
+            e.setMessage(stringBuilder.toString());
+        }
+        if (satelite.getPosition() != null) {
             e.setPositionX(BigDecimal.valueOf(satelite.getPosition().x));
             e.setPositionY(BigDecimal.valueOf(satelite.getPosition().y));
-            e.setDistance(BigDecimal.valueOf(satelite.getDistance()));
         }
+        e.setDistance(BigDecimal.valueOf(satelite.getDistance()));
         satelitesRepository.saveAndFlush(e);
     }
 

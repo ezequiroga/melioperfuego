@@ -34,6 +34,8 @@ public class SateliteDto {
                         entity.getPositionY().doubleValue());
                 s.setPosition(c);
             }
+            //TODO
+            //Retornar String[]
             return s;
         }
     }

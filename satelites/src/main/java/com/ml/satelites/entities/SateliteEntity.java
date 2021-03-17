@@ -29,6 +29,8 @@ public class SateliteEntity implements Serializable {
     private BigDecimal positionX;
     @Column(name = "POSITION_Y")
     private BigDecimal positionY;
+    @Column(name = "MESSAGE")
+    private String message;
     @Column(name = "WORKING")
     private char working;
 }
