@@ -9,13 +9,19 @@ La solucion cuenta con dos servicios conectados:
 
 El archivo *application.properties* del **centralinteligencia** contiene la url del servicio de satelites. Ese valor se espera por parametro. El default es `http://localhost:9191/api/satelites`
 
-## 2. Correr la aplicacion
+## 2. AWS
 
-### 2a. Clonar repo GIT
+La api esta disponible en AWS: 
+
+[http://ec2-15-228-28-170.sa-east-1.compute.amazonaws.com:9090/api/api-docs](http://ec2-15-228-28-170.sa-east-1.compute.amazonaws.com:9090/api/api-docs)
+
+## 3. Correr la aplicacion
+
+### 3a. Clonar repo GIT
 
 Para correr la app de forma local, clonar el repositorio GIT `https://github.com/ezequiroga/melioperfuego.git`
 
-### 2b. Build de la aplicacion
+### 3b. Build de la aplicacion
 
 Antes de correr la aplicacion es necesario compilar cada servicio. Para esto, estando en la raiz del proyecto, ejecutar desde una terminal:
 1. `cd centralinteligencia`
@@ -24,13 +30,13 @@ Antes de correr la aplicacion es necesario compilar cada servicio. Para esto, es
 4. `cd satelites`
 5. `mvn clean install`
 
-### 2c. Con contenedores - Docker
+### 3c. Con contenedores - Docker
 
 Estando en la raiz del proyecto, ejecutar desde una terminal `docker-compose up --build -d`
 
 Para este paso es necesario haber compilado los servicios.
 
-### 2d. Sin conetenedores - Java sobre host
+### 3d. Sin conetenedores - Java sobre host
 
 Estando en la raiz del proyecto:
 1. Ejecutar `java -jar satelites/target/satelites-0.0.1-SNAPSHOT.jar`
@@ -38,7 +44,7 @@ Estando en la raiz del proyecto:
 
 Para este paso es necesario haber compilado los servicios.
 
-## 3. Documentacion de la API
+## 4. Documentacion de la API
 
 API docs http:// \{DOMINIO\} | \{IP:PUERTO\} /api/api-docs
 
