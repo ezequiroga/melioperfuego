@@ -1,5 +1,6 @@
 package com.ml.satelites.dtos;
 
+import com.ml.satelites.entities.SateliteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SateliteDto {
+
     private String name;
-    private double  distance;
+    private double distance;
     private String[] message;
     private CoordenadaDto position;
+
 }

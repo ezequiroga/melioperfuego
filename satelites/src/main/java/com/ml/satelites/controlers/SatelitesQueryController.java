@@ -2,6 +2,7 @@ package com.ml.satelites.controlers;
 
 import com.ml.satelites.dtos.SateliteDto;
 import com.ml.satelites.services.SatelitesService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,16 +29,16 @@ public class SatelitesQueryController {
     
     @GetMapping(value = "/{satellite_name}")
     public ResponseEntity retrieve(@PathVariable String satellite_name){
-        SateliteDto dto = satelitesService.getByName(satellite_name);
-        if (dto == null){
+        Optional<SateliteDto> dto = satelitesService.getByName(satellite_name);
+        if (dto.isEmpty()){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(dto, HttpStatus.OK);
+        return new ResponseEntity(dto.get(), HttpStatus.OK);
     }
     
     @GetMapping(value = "/")
     public ResponseEntity getAll(){
-        return new ResponseEntity(satelitesService.getAll(), HttpStatus.OK);
+        return new ResponseEntity(satelitesService.getAllWorking(), HttpStatus.OK);
     }
     
 }

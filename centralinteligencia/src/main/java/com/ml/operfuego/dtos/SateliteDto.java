@@ -1,12 +1,11 @@
 package com.ml.operfuego.dtos;
 
-import java.awt.Point;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO que modela cada satelite de la flota.
+ * DTO que transporta la informacion de cada satelite de la flota.
  *
  * @author Eze Q.
  */
