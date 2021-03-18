@@ -5,6 +5,7 @@ import com.ml.operfuego.dtos.SateliteDto;
 import com.ml.operfuego.dtos.SatellitesDto;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,9 +38,9 @@ public class InteligenciaDeMensajesServiceTest {
         
         String expResult = "este es un mensaje secreto";
         
-        String result = instance.reconstruirMensaje(satellitesDto);
+        Optional<String> result = instance.reconstruirMensaje(satellitesDto);
         
-        assertEquals(expResult, result);
+        assertEquals(expResult, result.get());
     }
     
 }

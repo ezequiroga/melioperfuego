@@ -4,6 +4,7 @@ import com.ml.satelites.dtos.CoordenadaDto;
 import com.ml.satelites.dtos.SateliteDto;
 import com.ml.satelites.entities.SateliteEntity;
 import com.ml.satelites.repositories.SatelitesRepository;
+import com.ml.satelites.utils.Utils;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class SatelitesService {
 
     @Autowired
     private SatelitesRepository satelitesRepository;
+    private final String SEPARADOR = "--";
 
     public int getCantidadDeSatelites() {
         Optional<List<SateliteEntity>> satelitesEntity = satelitesRepository.findByWorking('Y');
@@ -40,8 +42,10 @@ public class SatelitesService {
             CoordenadaDto coordenada = new CoordenadaDto(entity.get().getPositionX().doubleValue(), entity.get().getPositionY().doubleValue());
             dto.setPosition(coordenada);
         }
-        //TODO
-        //Retornar String[]
+        if(entity.get().getMessage() != null){
+            dto.setMessage(Utils.StringToArray(entity.get().getMessage(), SEPARADOR));
+        }
+
         return Optional.of(dto);
     }
 
@@ -55,16 +59,7 @@ public class SatelitesService {
             e.setName(satelite.getName());
         }
         if(satelite.getMessage() != null){
-            boolean stringVacio = true;
-            StringBuilder stringBuilder = new StringBuilder();
-            for(String s : satelite.getMessage()){
-                if(!stringVacio){
-                    stringBuilder.append("--");
-                }
-                stringBuilder.append(s);
-                stringVacio = false;
-            }
-            e.setMessage(stringBuilder.toString());
+            e.setMessage(Utils.ArrayToString(satelite.getMessage(), SEPARADOR));
         }
         if (satelite.getPosition() != null) {
             e.setPositionX(BigDecimal.valueOf(satelite.getPosition().x));
@@ -78,7 +73,21 @@ public class SatelitesService {
         Optional<List<SateliteEntity>> satelitesEntity = satelitesRepository.findByWorking('Y');
         List<SateliteDto> satelitesList = new LinkedList<>();
         satelitesEntity.get().stream().forEach(entity -> {
-            satelitesList.add(SateliteDto.Builder.fromEntity(entity));
+            SateliteDto s = new SateliteDto();
+            s.setName(entity.getName());
+            if (entity.getDistance() != null) {
+                s.setDistance(entity.getDistance().doubleValue());
+            }
+            if (entity.getPositionX() != null && entity.getPositionY() != null) {
+                CoordenadaDto c = new CoordenadaDto(
+                        entity.getPositionX().doubleValue(),
+                        entity.getPositionY().doubleValue());
+                s.setPosition(c);
+            }
+            if (entity.getMessage() != null) {
+                s.setMessage(Utils.StringToArray(entity.getMessage(), SEPARADOR));
+            }
+            satelitesList.add(s);
         });
         return satelitesList;
     }

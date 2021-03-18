@@ -69,8 +69,11 @@ public class CentralDeInteligenciaService {
         if (coordenadas.isEmpty()) {
             return Optional.empty();
         }
-        String mensaje = inteligenciaDeMensajeService.reconstruirMensaje(satellitesDto);
-        return Optional.of(new TopSecreteDto(coordenadas.get(), mensaje));
+        Optional<String> mensaje = inteligenciaDeMensajeService.reconstruirMensaje(satellitesDto);
+        if (mensaje.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(new TopSecreteDto(coordenadas.get(), mensaje.get()));
     }
 
     public Optional<TopSecreteDto> informacionUltraSecreta() {
